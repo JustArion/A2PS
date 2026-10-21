@@ -1,5 +1,3 @@
-import std.io;
-
 // ASN.1 SEQUENCE with a ASN.1 INTEGER
 struct ClientHandshake {
     u8 PacketType;              // 99

@@ -11,7 +11,6 @@
 
 // Payloads removed due to sensitive GUIDs
 
-import std.io;
 import std.string;
 import std.time;
 
@@ -25,6 +24,7 @@ struct UserInfo {
     padding[1];                                 // 00
     NetString Guid;                             // len 0x24 (36): random v4 UUID, new in every capture
     u8 Unk0[3];                                 // 01 00 00
+                                                // On Anomalous Packet: 02 38 08
     NetString Account;                          // len 0x2c (44) or 0x2b (43): "<regional account>:<GUID2>"
  
     // Trailing block, 12 bytes.

@@ -4,8 +4,6 @@
 
 // Heavily WIP due to lots of unused blocks of data
 
-import std.io;
-
 using NetString = std::string::SizedString<u8>;
 using ServerId = le u16;
 

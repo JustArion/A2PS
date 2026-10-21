@@ -8,8 +8,6 @@
 // Europe does not send this packet in the captures.
 // In NA East it follows a 5-byte client message (type 0x08), which may be the "enter server" request. Not decoded.
 
-import std.io;
-
 using ServerId = le u16;
  
 struct LastServer {
