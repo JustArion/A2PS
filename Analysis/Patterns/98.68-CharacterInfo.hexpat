@@ -9,7 +9,7 @@ using ServerId = le u16;
 
 struct Header {
     u8 Opcode;                  // 0x98 here, 0x68 in the one-character sample
-    u8 Unknown1;                // 0x01 here, not present in the one-character sample
+    u8 Subtype;                 // 0x01 here, not present in the one-character sample
     u8 TokenLength;             // 0x0b = 11
     u8 ProtocolVersion[3];      // 39 00 00
     u8 RecordCount;             // Number of timestamp blocks. 3 here (CharA creation, CharA logout, CharB logout), 2 in the one-character sample
