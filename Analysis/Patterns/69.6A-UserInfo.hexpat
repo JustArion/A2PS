@@ -27,19 +27,12 @@ struct UserInfo {
                                                 // On Anomalous Packet: 02 38 08
     NetString Account;                          // len 0x2c (44) or 0x2b (43): "<regional account>:<GUID2>"
  
-    // Trailing block, 12 bytes.
-    // Working idea: the last server this account ENTERED (server selector > Enter), with or without characters.
-    // Set on entry, so it is not limited to servers that have characters.
-    // SelectedServer1/2 are equal in every sample.
-    //   NA East: 0x0838 (LIVE_Dark_004). Account has characters there.
-    //   Europe:  0x090F (LIVE_Dark_019). Account has no characters there. User did not make EU characters.
-    //   NA West, SA, Azure: 0x0000 (no server entered in those captures).
-    ServerId LastEntered;                       // EU: 13 09
+    ServerId LastEntered;                       // 
     u8 CharacterCount;                          // 0x02 on NA East (original sample), 0x00 on the other regions
     std::time::EpochTime UnbannedTime;          // (Speculation) UnbannedTimestamp (when you'll be unbanned) or the ban timestamp
                                                 // zeros on NA East, NA West, SA, Azure. Europe: 00 00 00 00
     ServerId LastEnteredLight;                  // Europe: 0x0527 (LIVE_Light_019), which is also the ServerId in the Europe character list (0x6c). 0 elsewhere
-    ServerId LastEnteredDark;                   // EU: 13 09
+    ServerId LastEnteredDark;                   // 
     u8 Unk1;                                    // 0x03 in every sample
 };
  
