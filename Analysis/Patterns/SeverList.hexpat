@@ -27,7 +27,7 @@ enum Region : u16 {
 };
  
 struct Header {
-    be Region RegionId;            // ed 03 on NA East. Other regions use their own value
+    be Region RegionId;         // ed 03 on NA East. Other regions use their own value
     u8 SubType;                 // The first byte changes between messages (09, 06, 0b, 0d, 0f, 01), so it may be per-message.
     u8 ProtocolVersion[3];      // 39 00 00. "39 00 00" is a build constant that appears in most server packets.
     u8 ServerCount;             // NA East 0x12 = 18. EU 46, NA West 10, SA 12, Azure host 20
