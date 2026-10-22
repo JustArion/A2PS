@@ -19,15 +19,15 @@ using NetString = std::string::SizedString<u8>;
 using ServerId = le u16;
 
 enum Region : u16 {
-    NAEast = 0x03ED,            // Confirmed: login at 193.202.112.1   (Cloudflare, Ireland)
-    NAWest = 0x0297,            // Confirmed: login at 193.202.112.47  (Cloudflare, Ireland)
-    Europe = 0x09DA,            // Confirmed: login at 193.202.112.93  (Cloudflare, Ireland)
-    SouthAmerica = 0x02CC,      // Confirmed: login at 193.202.112.160 (Cloudflare, Ireland)
-    Asia = 0x04A2               // Confirmed: login at 20.48.104.27 (Microsoft Azure, Japan)
+    NAEast = 0xED03,            // Confirmed: login at 193.202.112.1   (Cloudflare, Ireland)
+    NAWest = 0x9702,            // Confirmed: login at 193.202.112.47  (Cloudflare, Ireland)
+    Europe = 0xDA09,            // Confirmed: login at 193.202.112.93  (Cloudflare, Ireland)
+    SouthAmerica = 0xCC02,      // Confirmed: login at 193.202.112.160 (Cloudflare, Ireland)
+    Asia = 0xA204               // Confirmed: login at 20.48.104.27 (Microsoft Azure, Japan)
 };
  
 struct Header {
-    Region RegionId;            // ed 03 on NA East. Other regions use their own value
+    be Region RegionId;            // ed 03 on NA East. Other regions use their own value
     u8 SubType;                 // The first byte changes between messages (09, 06, 0b, 0d, 0f, 01), so it may be per-message.
     u8 ProtocolVersion[3];      // 39 00 00. "39 00 00" is a build constant that appears in most server packets.
     u8 ServerCount;             // NA East 0x12 = 18. EU 46, NA West 10, SA 12, Azure host 20
@@ -47,14 +47,30 @@ bitfield ServerFlags {
 };
  
 struct Server {
-    ServerId Id;                // LE. 
-                                // NA East:
-                                //  Dark 0x0835-0x083D (LIVE_Dark_001..008)
-                                //  Light 0x044D-0x0455 (LIVE_Light_001..008)
-                                // Europe:
-                                //  Dark 0x08FD-0x0913 (LIVE_Dark_001..023)
-                                //  Light 0x0515-0x052B (LIVE_Light_001..023).
-                                // Other regions have their own ranges.
+    /*
+        NA East:
+            Light @ 1101 (04 4D)
+            Dark  @ 1201 (04 B1)
+        (16 Servers)
+        NA West:
+            Light @ 1201 (04 B1)
+            Dark  @ 2201 (08 99)
+        (10 Servers)
+        Europe:
+            Light @ 1301 (08 9A)
+            Dark  @ 2301 (08 FD)
+        (46 Servers)
+        South America:
+            Light @ 1401 (05 79)
+            Dark  @ 2401 (09 61)
+        (12 Servers)
+        Asia:
+            Light @ 1501 (05 DD)
+            Dark  @ 2501 (09 C5)
+        (20 Servers)
+    */
+    ServerId Id;
+
     ServerFaction FactionId;    // Light or Dark
     ServerId RealmId;           // same value as Id in every record
     padding[2];                 // always 0
