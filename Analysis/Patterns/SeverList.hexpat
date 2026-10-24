@@ -85,9 +85,10 @@ struct Server {
         u8 Prefix;              // 0x55 (85) on every multiple of 4 except on the last one, then it's 0x05
  
     ServerFlags Flags;          // 0x05 is valid here (IsNew + CreationRestricted), e.g. LIVE_Dark_010 and LIVE_Dark_011 in EU
-    u8 CapacityPercent;         // Live value. Differs between captures.
+    u8 CapacityPercent;         // 65% is "Busy" on Asia
  
     // Trailer: 50 01 00 in every record in NA East, EU, NA West, SA.
+    // ! Leading 50 could actually be a server's capacity before it's designated as "Busy"
     // Asia (Azure host): 5 of 20 records end in 3c 01 00. The first byte varies, 01 00 does not.
     // The trailer is the sentinel that ends each record, so records have variable size.
     u8 Trailer[3];
@@ -108,7 +109,7 @@ for (auto i = 0, i < packet.Header.ServerCount, i += 1) {
     Server server @ addressof(packet.Servers.data[i]);
     std::print("{} | {} | cap={}%",
         server.Name,
-        server.FactionId,
+        server.Flags,
         server.CapacityPercent);
         
     // Name ends at NameLength's address + 1 + length.
