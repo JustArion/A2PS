@@ -12,7 +12,7 @@ struct WorldServerInfo {
     u8 SubType;             // 0F
     u8 ProtocolVersion[3];  // 39 00 00
     ServerId Server;        // 38 08
-    NetString IpAddress;    // ""193.202.112.17""
+    NetString IpAddress;    // "193.202.112.17"
     le u16 Port;            // "13328"
 };
  
