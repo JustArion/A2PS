@@ -1,6 +1,36 @@
+### Elyos
+
 | Server Name     | Friendly Name |
 |-----------------|---------------|
-| `LIVE_Dark_001` | Israphel?     |
+| `LIVE_Light_001` | **Siel**      |
+| `LIVE_Light_002` |               |
+| `LIVE_Light_003` |               |
+| `LIVE_Light_004` |               |
+| `LIVE_Light_005` |               |
+| `LIVE_Light_006` |               |
+| `LIVE_Light_007` |               |
+| `LIVE_Light_008` |               |
+| `LIVE_Light_009` |               |
+| `LIVE_Light_010` |               |
+| `LIVE_Light_011` |               |
+| `LIVE_Light_012` |               |
+| `LIVE_Light_013` |               |
+| `LIVE_Light_014` |               |
+| `LIVE_Light_015` |               |
+| `LIVE_Light_016` |               |
+| `LIVE_Light_017` |               |
+| `LIVE_Light_018` |               |
+| `LIVE_Light_019` |               |
+| `LIVE_Light_020` |               |
+| `LIVE_Light_021` |               |
+| `LIVE_Light_022` |               |
+| `LIVE_Light_023` |               |
+
+### Asmodian
+
+| Server Name     | Friendly Name |
+|-----------------|---------------|
+| `LIVE_Dark_001` | **Israphel**  |
 | `LIVE_Dark_002` | Zikel?        |
 | `LIVE_Dark_003` | **Triniel**   |
 | `LIVE_Dark_004` | **Lumiel**    |
