@@ -30,7 +30,6 @@ struct Header {
     be Region RegionId;         // ed 03 on NA East. Other regions use their own value
     u8 SubType;                 // The first byte changes between messages (09, 06, 0b, 0d, 0f, 01), so it may be per-message.
     u8 ProtocolVersion[3];      // 39 00 00. "39 00 00" is a build constant that appears in most server packets.
-    u8 ServerCount;             // NA East 0x12 = 18. EU 46, NA West 10, SA 12, Azure host 20
 };
  
 enum ServerFaction : u8 {
@@ -44,6 +43,12 @@ bitfield ServerFlags {
     CreationRestricted : 1;     // bit 2 (0x04). Set on the first 3 of each faction in NA East.
     padding : 2;
     EarlyAccessServer : 1;      // bit 5 (0x20). Guess. Set on 1 NA server
+};
+
+enum ServerCapacity : u8 {
+    Normal = 0x1,
+    Busy = 0x2,
+    Full = 0x4
 };
  
 struct Server {
@@ -85,18 +90,28 @@ struct Server {
         u8 Prefix;              // 0x55 (85) on every multiple of 4 except on the last one, then it's 0x05
  
     ServerFlags Flags;          // 0x05 is valid here (IsNew + CreationRestricted), e.g. LIVE_Dark_010 and LIVE_Dark_011 in EU
-    u8 CapacityPercent;         // 65% is "Busy" on Asia
- 
-    // Trailer: 50 01 00 in every record in NA East, EU, NA West, SA.
-    // ! Leading 50 could actually be a server's capacity before it's designated as "Busy"
-    // Asia (Azure host): 5 of 20 records end in 3c 01 00. The first byte varies, 01 00 does not.
-    // The trailer is the sentinel that ends each record, so records have variable size.
-    u8 Trailer[3];
+    u8 CapacityPercent;         // A percentage from 1 - 100 indicating how full the server is
+    u8 BusyCapacityThreshold;   // The CapacityPercent needed to show as "Busy"
+
+
+    u8 Trailer[2];              // 01 00
+};
+
+fn GetCapacity(Server server) {
+    if (server.CapacityPercent >= 100) {
+        return ServerCapacity::Full;
+    }
+
+    if (server.CapacityPercent >= server.BusyCapacityThreshold) {
+        return ServerCapacity::Busy;
+    }
+    return ServerCapacity::Normal;
 };
  
 struct ServerList {
     Header Header;
-    std::Array<Server, Header.ServerCount> Servers;
+    u8 ServerCount;             // NA East 0x12 = 18. EU 46, NA West 10, SA 12, Azure host 20
+    std::Array<Server, ServerCount> Servers;
     u8 Trailer[2];              // 01 01
 };
 
@@ -105,12 +120,13 @@ ServerList packet @ 0x0;
  
 std::print("Region: {}", packet.Header.RegionId);
  
-for (auto i = 0, i < packet.Header.ServerCount, i += 1) {
+for (auto i = 0, i < packet.ServerCount, i += 1) {
     Server server @ addressof(packet.Servers.data[i]);
-    std::print("{} | {} | cap={}%",
+    ServerCapacity capacity = GetCapacity(server);
+    std::print("{} | {} ({})",
         server.Name,
         server.Flags,
-        server.CapacityPercent);
+        capacity);
         
     // Name ends at NameLength's address + 1 + length.
     // Flags comes right after Name, or one byte later when Prefix is present.
