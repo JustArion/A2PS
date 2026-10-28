@@ -14,7 +14,7 @@
 import std.string;
 import std.time;
 
-using NetString = std::string::SizedString<u8>;
+using string = std::string::SizedString<u8>;
 using ServerId = le u16;
  
 struct UserInfo {
@@ -22,10 +22,10 @@ struct UserInfo {
     u8 SubType;                                 // 0x06 - unknown
     u8 ProtocolVersion[3];                      // 39 00 00
     padding[1];                                 // 00
-    NetString Guid;                             // len 0x24 (36): random v4 UUID, new in every capture
+    string Guid;                             // len 0x24 (36): random v4 UUID, new in every capture
     u8 Unk0[3];                                 // 01 00 00
                                                 // On Anomalous Packet: 02 38 08
-    NetString Account;                          // len 0x2c (44) or 0x2b (43): "<regional account>:<GUID2>"
+    string Account;                          // len 0x2c (44) or 0x2b (43): "<regional account>:<GUID2>"
  
     ServerId LastEntered;                       // 
     u8 CharacterCount;                          // 0x02 on NA East (original sample), 0x00 on the other regions

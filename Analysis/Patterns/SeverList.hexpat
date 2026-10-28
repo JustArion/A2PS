@@ -15,7 +15,7 @@ import std.core;
 import std.array;
 import std.string;
 
-using NetString = std::string::SizedString<u8>;
+using string = std::string::SizedString<u8>;
 using ServerId = le u16;
 
 enum Region : u16 {
@@ -75,7 +75,7 @@ struct Server {
     ServerId RealmId;           // same value as Id in every record
     padding[2];                 // always 0
  
-    NetString Name;
+    string Name;
  
     // Prefix sentinel check. $ is the position of the candidate prefix byte.
     // If the prefix is absent, this byte is the Flags byte and bytes +4/+5 are trailer bytes 2-3 of the next record.
