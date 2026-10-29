@@ -29,4 +29,4 @@ struct Join {
     ServerId Server;
 };
  
-Packet<Join> @ 0x0;
+Packet<Join> packet @ 0x0;
