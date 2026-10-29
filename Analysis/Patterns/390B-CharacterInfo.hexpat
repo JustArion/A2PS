@@ -2,10 +2,7 @@
 #pragma description Character information in AION 2
 
 import std.string;
-import std.io;
-import std.core;
 import std.array;
-import std.string;
 import type.leb128;
 
 using string = std::string::SizedString<u8>;

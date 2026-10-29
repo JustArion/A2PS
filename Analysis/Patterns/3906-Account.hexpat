@@ -12,10 +12,6 @@
 // Payloads removed due to sensitive GUIDs
 
 import std.string;
-import std.io;
-import std.core;
-import std.array;
-import std.string;
 import type.leb128;
 import type.guid;
 import std.time;
